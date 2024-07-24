@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 
 </script>
 
@@ -7,3 +7,15 @@
     <router-view/>
   </div>
 </template>
+
+<style scoped>
+
+  #app{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+</style>
