@@ -2,7 +2,6 @@
 import Header from "../components/Header.vue";
 import { ref, watch } from "vue";
 
-
 const mensaje: String = "Chat";
 const disabledButton: Boolean = ref(true);
 const prompt: String = ref("");
@@ -49,8 +48,10 @@ watch(prompt, (value, oldValue) => {
     </div>
   </div>
   <div class="absolute bottom-2 flex items-center justify-center gap-2 w-full">
-    <button class="rounded-full bg-green-800 hover:bg-green-700 h-11 p-2 flex items-center">
-      <img src="../assets/menu.png" alt="Menu" class="h-10 w-10">
+    <button
+      class="rounded-full bg-green-800 hover:bg-green-700 h-11 p-2 flex items-center"
+    >
+      <img src="../assets/menu.png" alt="Menu" class="h-10 w-10" />
     </button>
     <input
       type="text"
@@ -62,7 +63,7 @@ watch(prompt, (value, oldValue) => {
       class="rounded-full bg-green-800 hover:bg-green-700 disabled:bg-opacity-60 h-11 p-2 flex items-center"
       v-bind:disabled="disabledButton"
     >
-    <img src="../assets/send.png" class="h-10 w-10" alt="Enviar">
+      <img src="../assets/send.png" class="h-10 w-10" alt="Enviar" />
     </button>
   </div>
 </template>
