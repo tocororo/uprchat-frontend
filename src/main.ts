@@ -3,18 +3,14 @@ import { createRouter, createWebHistory } from "vue-router";
 import "./style.css";
 import App from "./App.vue";
 import Login from "./pages/Login.vue";
-<<<<<<< HEAD
-import Root from "./pages/Root.vue";
 import Chat from "./pages/Chat.vue";
-import SourceList from "./pages/sources/sources-list/SourcesList.vue";
+import SourceList from "./pages/sources/SourcesList.vue";
+import AddSources from "./pages/sources/AddSources.vue";
 import LLMs from "./pages/llms/LLMs.vue";
 import AddLLM from "./pages/llms/AddLLM.vue";
+import JobsList from "./pages/collection-jobs/JobsList.vue";
 
 const listLinks: Array<Object> = [
-  {
-    url: "/",
-    text: "Login",
-  },
   {
     url: "/chat",
     text: "Chat",
@@ -28,14 +24,10 @@ const listLinks: Array<Object> = [
     text: "LLMs",
   },
   {
-    url: '/llms/add',
-    text:"Agregar LLM"
-  }
+    url: "/collector",
+    text: "Recolecciones",
+  },
 ];
-=======
-import Chat from "./pages/Chat.vue";
-import SourceList from "./pages/sources/sources-list/SourcesList.vue";
->>>>>>> 55f2ca3f881061df70d64015dc2c00bf3821d2c9
 
 const routes = [
   {
@@ -49,10 +41,14 @@ const routes = [
     component: Chat,
   },
   {
-<<<<<<< HEAD
     path: "/sources",
     name: "Fuentes",
     component: SourceList,
+  },
+  {
+    path: "/sources/add",
+    name: "Nueva Fuente",
+    component: AddSources,
   },
   {
     path: "/llms",
@@ -63,13 +59,12 @@ const routes = [
     path: "/llms/add",
     name: "AddLLM",
     component: AddLLM
-  }
-=======
-    path:"/sources",
-    name:"Fuentes",
-    component: SourceList,
   },
->>>>>>> 55f2ca3f881061df70d64015dc2c00bf3821d2c9
+  {
+    path: "/collector",
+    name: "Recolecciones",
+    component: JobsList
+  }
 ];
 
 const router = createRouter({
