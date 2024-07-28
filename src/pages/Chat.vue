@@ -2,6 +2,20 @@
 import Header from "../components/Header.vue";
 import Footer from '../components/Footer.vue';
 
+<<<<<<< HEAD
+=======
+const mensaje: String = "Chat";
+const disabledButton: Boolean = ref(true);
+const prompt: String = ref("");
+
+watch(prompt, (value, oldValue) => {
+  if (value != "") {
+    disabledButton.value = false;
+  } else {
+    disabledButton.value = true;
+  }
+});
+>>>>>>> 55f2ca3f881061df70d64015dc2c00bf3821d2c9
 </script>
 
 <template>
@@ -36,6 +50,7 @@ import Footer from '../components/Footer.vue';
         </button>
       </div>
     </div>
+<<<<<<< HEAD
     <div class="settings border-2 bg-green-700 rounded-l-lg p-2 text-white flex flex-col gap-2">
       <h3 class="text-center">Ajustes</h3>
       <div class="flex flex-col gap-1 grow border-2 rounded-lg p-2">
@@ -54,6 +69,28 @@ import Footer from '../components/Footer.vue';
       </div>
     </div>
   </main>
+=======
+  </div>
+  <div class="absolute bottom-2 flex items-center justify-center gap-2 w-full">
+    <button
+      class="rounded-full bg-green-800 hover:bg-green-700 h-11 p-2 flex items-center"
+    >
+      <img src="../assets/menu.png" alt="Menu" class="h-10 w-10" />
+    </button>
+    <input
+      type="text"
+      class="border-2 border-green-800 p-2 rounded-xl w-1/2"
+      placeholder="Mensaje"
+      v-model="prompt"
+    />
+    <button
+      class="rounded-full bg-green-800 hover:bg-green-700 disabled:bg-opacity-60 h-11 p-2 flex items-center"
+      v-bind:disabled="disabledButton"
+    >
+      <img src="../assets/send.png" class="h-10 w-10" alt="Enviar" />
+    </button>
+  </div>
+>>>>>>> 55f2ca3f881061df70d64015dc2c00bf3821d2c9
 </template>
 
 
