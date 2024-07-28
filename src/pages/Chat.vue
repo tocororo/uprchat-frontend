@@ -1,68 +1,80 @@
 <script setup lang="ts">
 import Header from "../components/Header.vue";
-import { ref, watch } from "vue";
+import Footer from '../components/Footer.vue';
 
-
-const mensaje: String = "Chat";
-const disabledButton: Boolean = ref(true);
-const prompt: String = ref("");
-
-watch(prompt, (value, oldValue) => {
-  if (value != "") {
-    disabledButton.value = false;
-  } else {
-    disabledButton.value = true;
-  }
-});
 </script>
 
 <template>
-  <Header :mensaje></Header>
-  <div
-    class="border-2 border-green-800 absolute left-2 top-24 h-4/5 w-52 flex items-center justify-center rounded-lg"
-  >
-    <button
-      class="text-white bg-green-800 p-4 rounded-lg hover:bg-green-700 relative bottom-52"
-    >
-      Nuevo chat
-    </button>
-  </div>
-  <div class="w-4/6 h-3/4 relative top-4"></div>
-  <div
-    class="border-2 border-green-800 absolute right-2 top-24 h-4/5 w-52 flex flex-col items-center justify-around rounded-lg"
-  >
-    <div class="w-full flex flex-col items-center">
-      <p class="text-green-800 text-xl text-center m-2">Agente</p>
-      <select
-        class="w-3/4 text-center h-10 border-2 rounded-md bg-white border-green-800"
-      >
-        <option value="profesor">Profesor</option>
-        <option value="bibliotecario">Bibliotecario</option>
-        <option value="investigador">Investigador</option>
-      </select>
+  <Header headerTitle="Chat" />
+  <main class="grid w-full gap-2">
+    <div class="history border-2 bg-green-700 rounded-r-lg p-4 text-white flex flex-col gap-2">
+      <button class="border-2 p-1 rounded-lg flex justify-center">
+        <img src="/src/assets/add.svg" alt="">
+        <span>Nuevo Chat</span>
+      </button>
+      <div class="border-2 p-1 rounded-lg grow flex flex-col" >
+        <h3 class="text-center underline">Historial</h3>
+        <ul class="flex flex-col gap-1 grow overflow-y-scroll">
+          <li class="flex justify-between"><span>Chat 1</span><button><img src="/src/assets/delete.svg" alt=""></button></li>
+        </ul>
+      </div>
+      <button class="border-2 p-1 rounded-lg flex justify-center">
+        <img src="/src/assets/logout.svg" alt="">
+        <span>Salir</span>
+      </button>
     </div>
-    <div class="w-full flex flex-col items-center">
-      <p class="text-green-800 text-xl text-center m-2">Modelo</p>
-      <select
-        class="w-3/4 text-center h-10 border-2 rounded-md bg-white border-green-800"
-      ></select>
+    <div class="chat flex flex-col p-2">
+      <div class=" grow overflow-y-scroll" >
+      </div>
+      <div class="flex p-1 border rounded-lg border-green-600">
+        <button>
+          <img class="bg-green-600 rounded-lg" src="/src/assets/menu.svg" alt="">
+        </button>
+        <input class="grow outline-none px-1" placeholder="Escriba su consulta" type="text">
+        <button>
+          <img class="bg-green-600 rounded-lg" src="/src/assets/send.svg" alt="">
+        </button>
+      </div>
     </div>
-  </div>
-  <div class="absolute bottom-2 flex items-center justify-center gap-2 w-full">
-    <button class="rounded-full bg-green-800 hover:bg-green-700 h-11 p-2 flex items-center">
-      <img src="../assets/menu.png" alt="Menu" class="h-10 w-10">
-    </button>
-    <input
-      type="text"
-      class="border-2 border-green-800 p-2 rounded-xl w-1/2"
-      placeholder="Mensaje"
-      v-model="prompt"
-    />
-    <button
-      class="rounded-full bg-green-800 hover:bg-green-700 disabled:bg-opacity-60 h-11 p-2 flex items-center"
-      v-bind:disabled="disabledButton"
-    >
-    <img src="../assets/send.png" class="h-10 w-10" alt="Enviar">
-    </button>
-  </div>
+    <div class="settings border-2 bg-green-700 rounded-l-lg p-2 text-white flex flex-col gap-2">
+      <h3 class="text-center">Ajustes</h3>
+      <div class="flex flex-col gap-1 grow border-2 rounded-lg p-2">
+        <h4 class="text-center">Modelo</h4>
+        <select class="text-green-600 rounded-lg p-1" name="model">
+          <option value="1">Modelo 1</option>
+          <option value="2">Modelo 2</option>
+          <option value="3">Modelo 3</option>
+        </select>
+        <h4 class="text-center">Agente</h4>
+        <select class="text-green-600 rounded-lg p-1" name="model">
+          <option value="1">Agente 1</option>
+          <option value="2">Agente 2</option>
+          <option value="3">Agente 3</option>
+        </select>
+      </div>
+    </div>
+  </main>
 </template>
+
+
+<style scoped>
+
+  main {
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+    grid-template-areas: "history chat chat chat settings";
+  }
+
+  .history {
+    grid-area: history;
+  }
+
+  .chat {
+    grid-area: chat;
+  }
+
+  .settings {
+    grid-area: settings;
+  }
+
+</style>

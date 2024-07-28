@@ -3,19 +3,20 @@
 </script>
 
 <template>
-  <div id="app">
-    <router-view/>
-  </div>
+    <router-view />
 </template>
 
-<style scoped>
+<style>
+#app {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  #app{
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+main {
+  flex-grow: 1;
+}
 
 </style>
