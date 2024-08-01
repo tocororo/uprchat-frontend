@@ -3,9 +3,9 @@ import Header from "../../components/Header.vue";
 import BasicButton from "../../components/BasicButton.vue";
 import LLMForm from "./components/LLMForm.vue";
 
-const headerTitle: string = "Adicionar LLM";
+const headerTitle: string = "Actualizar LLM";
 const backText: string = "Atrás";
-const addText: string = "Adicionar";
+const addText: string = "Actualizar";
 </script>
 
 <template>

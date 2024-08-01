@@ -9,6 +9,7 @@ import AddSources from "./pages/sources/AddSources.vue";
 import LLMs from "./pages/llms/LLMs.vue";
 import AddLLM from "./pages/llms/AddLLM.vue";
 import JobsList from "./pages/collection-jobs/JobsList.vue";
+import UpdateLLM from "./pages/llms/UpdateLLM.vue";
 
 const listLinks: Array<Object> = [
   {
@@ -64,6 +65,11 @@ const routes = [
     path: "/collector",
     name: "Recolecciones",
     component: JobsList
+  },
+  {
+    path: "/llms/update",
+    name: "UpdateLLM",
+    component: UpdateLLM
   }
 ];
 

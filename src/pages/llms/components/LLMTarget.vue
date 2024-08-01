@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from "vue";
+
 import UpdateButton from "../../../components/UpdateButton.vue";
 import DeleteButton from "../../../components/DeleteButton.vue";
 const props: string[] = defineProps(["name", "apiKey"]);
