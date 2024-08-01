@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
-const username: String = ref("");
-const password: String = ref("");
-const usernameError: Boolean = ref(false);
-const passwordError: Boolean = ref(false);
+const username = ref<String>("");
+const password = ref<String>("");
+const usernameError = ref<Boolean>(false);
+const passwordError = ref<Boolean>(false);
 
 watch(username, (value, oldValue) => {
   if (value.length > 30) {
