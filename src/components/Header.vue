@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+// import { useRoute } from 'vue-router';
 
-const props = defineProps([
-  "headerTitle",
-  "listLinks"
-  ]);
+const props = defineProps({headerTitle: String,
+  listLinks: String})
 
-const currentPath:String = useRoute().fullPath;
+// const currentPath:String = useRoute().fullPath;
 
 
 </script>
@@ -15,7 +13,7 @@ const currentPath:String = useRoute().fullPath;
   <header
     class="bg-green-800 w-full sticky top-0 text-white shadow-lg px-2 h-16 flex justify-center items-center"
   >
-    <h1 class="text-center text-2xl p-1">{{ headerTitle }}</h1>
+    <h1 class="text-center text-2xl p-1">{{ props.headerTitle}}</h1>
     <!-- <ul v-if="listLinks" class="flex justify-between py-1 border-t-2" >
       <li class="flex-1 text-center" v-for="link in listLinks" :key="link.text" >
         <a v-if="currentPath !== link.url" class="text-shadow-white" :href="link.url">{{ link.text }}</a>
