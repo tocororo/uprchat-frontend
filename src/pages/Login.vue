@@ -33,7 +33,7 @@ watch(password, (value, oldValue) => {
 
 <template>
   <form
-    class="flex items-center flex-col gap-5 w-1/4 border-2 border-green-800 p-4 rounded-lg shadow-2xl m-12"
+    class="flex items-center flex-col gap-5 w-3/4 border-2 border-green-800 p-4 rounded-lg shadow-2xl m-12 sm:w-2/4 md:w-1/4"
   >
     <h1 class="text-green-800 text-4xl">Bienvenido</h1>
     <hr class="border-1 w-full border-green-800" />

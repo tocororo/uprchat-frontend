@@ -3,9 +3,16 @@ import Header from "../components/Header.vue";
 import NavMenu from "../components/NavMenu.vue";
 import MenuIcon from "../components/MenuIcon.vue";
 import MenuIconGreen from "../components/MenuIconGreen.vue";
+import ChatHistory from "./sources/components/ChatHistory.vue";
+import ChatSettings from "./sources/components/ChatSettings.vue";
 import { ref } from "vue";
 
 const showNav = ref<boolean>(false);
+const showHistory = ref<boolean>(false)
+const showButtonHideHistory = ref<boolean>(false)
+const showSettings = ref<boolean>(false)
+const showButtonHideSettings = ref<boolean>(false)
+
 const showMenu = () => {
   if (showNav.value == false) {
     showNav.value = true;
@@ -13,16 +20,47 @@ const showMenu = () => {
     showNav.value = false
   }
 };
+
+const showChatHistory = () =>{
+  showHistory.value = true
+  showButtonHideHistory.value = true
+}
+
+const showChatSettings = () =>{
+  showSettings.value = true
+  showButtonHideSettings.value = true
+}
+
+const hideChatHistory = () =>{
+  showHistory.value = false
+  showButtonHideHistory.value = false
+}
+
+const hideChatSettings = () =>{
+  showSettings.value = false
+  showButtonHideSettings.value = false
+}
+
 </script>
 
 <template>
   <Header headerTitle="Chat" />
   <MenuIcon @click="showMenu" />
   <MenuIconGreen v-show="showNav" @click="showMenu" />
-  <NavMenu v-show="showNav" />
+  <NavMenu v-show="showNav"/>
   <main class="grid w-full gap-2">
+    <div>
+      <button @click="showChatHistory" class="bg-green-800 text-white mt-4 ml-2 rounded-xl visible sm:hidden">Historial de Chats</button>
+    </div>
+    <div>
+      <button @click="showChatSettings" class="bg-green-800 text-white mt-4 ml-2 p-3 rounded-xl visible sm:hidden absolute right-2">Ajustes</button>
+    </div>
+    <ChatHistory v-show="showHistory" />
+    <ChatSettings v-show="showSettings"/>
+    <button @click="hideChatHistory" v-show="showButtonHideHistory" class="bg-green-800 text-white mt-4 ml-2 rounded-xl visible sm:hidden absolute bottom-4 left-3 p-2">Ocultar</button>
+    <button @click="hideChatSettings" v-show="showButtonHideSettings" class="bg-green-800 text-white mt-4 ml-2 rounded-xl visible sm:hidden absolute bottom-4 right-3 p-2">Ocultar</button>
     <div
-      class="history border-2 bg-green-700 rounded-r-lg p-4 text-white flex flex-col gap-2"
+      class="history border-2 bg-green-700 rounded-r-lg p-4 text-white sm:flex sm:flex-col gap-2 hidden"
     >
       <button
         class="border-2 p-1 rounded-lg flex justify-center bg-green-800 hover:bg-green-700"
@@ -57,7 +95,7 @@ const showMenu = () => {
           />
         </button>
         <input
-          class="grow outline-none px-1"
+          class="grow outline-none px-1 w-full"
           placeholder="Escriba su consulta"
           type="text"
         />
@@ -71,7 +109,7 @@ const showMenu = () => {
       </div>
     </div>
     <div
-      class="settings border-2 bg-green-700 rounded-l-lg p-2 text-white flex flex-col gap-2"
+      class="settings border-2 bg-green-700 rounded-l-lg p-2 text-white sm:flex sm:flex-col gap-2 hidden"
     >
       <h3 class="text-center text-xl">Ajustes</h3>
       <div class="flex flex-col gap-1 grow border-2 rounded-lg p-2">
