@@ -29,11 +29,23 @@ watch(password, (value, oldValue) => {
     passwordError.value = false;
   }
 });
+
+const login = ()=> {
+  if (username.value === "admin" && password.value === "admin") {
+    window.location.pathname = "chat/";
+    return ;
+  }
+  username.value = "";
+  password.value = "";
+  alert("Credenciales invalidas");
+};
+
 </script>
 
 <template>
   <form
     class="flex items-center flex-col gap-5 w-3/4 border-2 border-green-800 p-4 rounded-lg shadow-2xl m-12 sm:w-2/4 md:w-1/4"
+    @submit.prevent="login"
   >
     <h1 class="text-green-800 text-4xl">Bienvenido</h1>
     <hr class="border-1 w-full border-green-800" />
@@ -63,6 +75,7 @@ watch(password, (value, oldValue) => {
     </div>
     <button
       class="text-white text-xl bg-green-800 hover:bg-green-700 p-4 w-full rounded-lg"
+      @click="login"
     >
       Acceder
     </button>

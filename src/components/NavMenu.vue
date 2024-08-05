@@ -1,7 +1,7 @@
 
 <template>
   <div
-    class="sm:w-1/5 w-2/5 h-full absolute top-0 left-0 bg-white flex items-center justify-center border-2 border-green-800"
+    class="sm:w-1/5 w-2/5 h-full absolute top-0 left-0 bg-white flex items-center justify-center border-2 border-green-800 "
     >
     <nav>
       <ul class="sm:text-xl flex flex-col gap-10 text-green-800">

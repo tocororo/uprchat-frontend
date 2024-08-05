@@ -5,15 +5,16 @@
 </template>
 
 <style>
-#app {
-  min-height: 100vh;
-  min-width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+  #app{
+    min-width: 100dvw;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-main {
-  flex-grow: 1;
-}
+  main {
+    flex-grow: 1;
+  }
+
 </style>

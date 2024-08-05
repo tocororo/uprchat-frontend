@@ -3,9 +3,9 @@ import { ref, type Ref } from 'vue';
 
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import AddButton from '../../components/AddButton.vue';
 import BasicButton from '../../components/BasicButton.vue';
 import NavMenu from '../../components/NavMenu.vue';
+import UpdateButton from '../../components/UpdateButton.vue';
 
 const name: Ref<string> = ref("");
 const newUrl: Ref<string> = ref("");
@@ -86,7 +86,7 @@ const showMenu = () => {
 
 const cancel = ()=> {window.history.back();};
 
-const addSource = () => {
+const updateSource = () => {
     if (name.value === "") alert("Por favor escriba un nombre");
     if (listUrl.value.length === 0) alert("Por favor agregue una al menos una url de inicio");
     if (collector.value === "") alert("Por favor elija un recolector");
@@ -104,7 +104,7 @@ const addSource = () => {
 </script>
 
 <template>
-    <Header headerTitle="Nueva Fuente" @showMenu="showMenu" />
+    <Header headerTitle="Actualizar Fuente" @showMenu="showMenu" />
     <NavMenu v-show="showNav" />
     <main class="sm:w-3/4 flex flex-col justify-center">
         <form action="" @submit.prevent="" class="grid grid-cols-2 grid-rows-7 items-center gap-2 p-3 ">
@@ -148,7 +148,7 @@ const addSource = () => {
                 <input v-model="collector" class="w-full outline-0" type="text" name="collector" id=""
                     placeholder="Escriba el recolector q usará la fuente">
             </div>
-            <AddButton text="Agregar" :onClickAction="addSource"/>
+            <UpdateButton text="Actualizar" :onClickAction="updateSource"/>
             <BasicButton text="Cancel" :onClickAction="cancel" />
         </form>
     </main>
