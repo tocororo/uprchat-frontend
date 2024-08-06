@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-2 bg-green-700 rounded-l-lg p-2 text-white flex flex-col gap-2 absolute right-0 h-4/5 w-2/5"
+    class="border-2 bg-green-700 rounded-l-lg p-2 text-white flex flex-col gap-2 absolute right-0 h-4/5 w-2/5 z-10"
   >
     <h3 class="text-center text-xl">Ajustes</h3>
     <div class="flex flex-col gap-1 grow border-2 rounded-lg p-2">

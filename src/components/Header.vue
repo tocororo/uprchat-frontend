@@ -44,7 +44,7 @@ const menuButtonAction = () => {
 </script>
 
 <template>
-  <header class="bg-green-800 w-full sticky top-0 text-white shadow-lg px-2 h-16 flex flex-col justify-center items-center z-50">
+  <header class="bg-green-800 w-full sticky top-0 text-white shadow-lg px-2 h-16 flex flex-col justify-center items-center z-40">
     <MenuIcon class="md:hidden" @click="menuButtonAction" />
     <h1 class="text-center text-2xl p-1">{{ props.headerTitle }}</h1>
     <ul v-if="listLinks" class="flex w-full justify-between py-1 border-t-2 nav-resposive">

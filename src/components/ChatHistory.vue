@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border-2 bg-green-700 rounded-r-lg p-4 text-white flex flex-col gap-2 absolute h-4/5"
+    class="border-2 bg-green-700 rounded-r-lg p-4 text-white flex flex-col gap-2 absolute h-4/5 w-2/5 z-10"
   >
     <button
       class="border-2 p-1 rounded-lg flex justify-center bg-green-800 hover:bg-green-700"
