@@ -1,47 +1,48 @@
 <script setup lang="ts">
-import { Ref,ref } from "vue";
 import Header from "../../components/Header.vue";
-import BasicButton from "../../components/BasicButton.vue";
-import LLMForm from "./components/LLMForm.vue";
-import NavMenu from "../../components/NavMenu.vue";
+import AddButton from "../../components/AddButton.vue";
+import CancelButton from "../../components/CancelButton.vue";
+import Footer from "../../components/Footer.vue";
+import { ref } from 'vue';
 
 const headerTitle: string = "Adicionar LLM";
-const backText: string = "Atrás";
-const addText: string = "Adicionar";
 
-const showNav: Ref<Boolean> = ref(false);
-  const showMenu = () => {
-  if (showNav.value == false) {
-    showNav.value = true;
-  } else {
-    showNav.value = false;
-  }
+const name = ref<String>("");
+const apikey = ref<String>("");
+const url = ref<String>("");
+
+const addLLM = ()=> {
+
 };
 
 const back  = () => {
   window.history.back();
 };
 
-
 </script>
 
 <template>
-  <Header :header-title="headerTitle" @show-menu="showMenu" />
-  <NavMenu v-show="showNav" />
-  <div class="llm-form w-1/2 flex flex-col items-center gap-4 mt-40">
-    <LLMForm />
-  </div>
-
-  <BasicButton :text="backText" class="fixed left-8 bottom-8" @click-action="back" />
-  <BasicButton :text="addText" class="fixed right-8 bottom-8" />
+  <Header :header-title="headerTitle"  />
+  <main class="w-3/4 flex flex-col justify-center">
+    <form action="" @submit.prevent="" class="grid grid-cols-1 sm:grid-cols-2  sm:grid-rows-7 grid-flow-row items-center gap-2 p-3 ">
+      <label for="name">Nombre*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+          <input v-model="name" class="w-full outline-0" placeholder="Escriba el nombre del LLM"
+              type="text" name="name" id="">
+      </div>
+      <label for="url">URL*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+          <input v-model="url" class="w-full outline-0" placeholder="Escriba la url"
+              type="text" name="url" id="">
+      </div>
+      <label for="apikey">API KEY*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+          <input v-model="apikey" class="w-full outline-0" placeholder="Escriba la API KEY"
+              type="text" name="apikey" id="">
+      </div>
+      <AddButton text="Agregar" :onClickAction="addLLM" />
+      <CancelButton text="Cancelar" :onClickAction="back" />
+  </form>
+  </main>
+  <Footer/>
 </template>
-
-<style scoped>
-
-@media (max-width:640px) {
-    .llm-form{
-      width: 90%;
-    }
-}
-
-</style>

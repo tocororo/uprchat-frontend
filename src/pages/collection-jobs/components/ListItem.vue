@@ -7,6 +7,8 @@ import { defineProps } from 'vue';
 const props = defineProps({
   jobName: String,
   state: String,
+  date: Date,
+  sourcesList: [String]
 });
 
 const updateJobs = ()=> {
@@ -19,16 +21,25 @@ const logsJobs = ()=> {
 </script>
 
 <template>
-  <li class="border-2 border-green-500 rounded-lg p-2 shadow-lg my-1 flex justify-between">
+  <li class="border-2 border-green-500 rounded-lg p-2 shadow-lg my-1 flex flex-col justify-between">
+    <details>
+      <summary class="text-green-600 text-2xl">
+        <span>Recolección: {{ props.jobName }}</span>
+        <p class="text-xl">Estado: {{ props.state }}</p>
+      </summary>
       <div class="basis-4/5">
-        <h3 class="text-green-600 font-bold">Recolección: {{ props.jobName }}</h3>
-        <h4>Estado: {{ props.state }}</h4>
-        
+        <h4>Lista de Fuentes:</h4>
+        <p>{{ props.sourcesList }}</p>
       </div>
-      <div class="flex justify-between items-center gap-1 basis-1/5">
+      <div class="basis-4/5">
+        <h4>Fecha:</h4>
+        <p>{{ props.date }}</p>
+      </div>
+      <div class="flex justify-end items-center gap-1 basis-1/5">
         <BasicButton text="Consultar" :on-click-action="logsJobs"/>
         <UpdateButton text="Editar" :on-click-action="updateJobs"/>
         <DeleteButton text="Borrar"/>
       </div>
+    </details>
   </li>
 </template>

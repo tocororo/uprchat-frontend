@@ -2,22 +2,12 @@
 import Header from "../../components/Header.vue";
 import AddButton from "../../components/AddButton.vue";
 import LLMTarget from "./components/LLMTarget.vue";
-import NavMenu from "../../components/NavMenu.vue";
-import { type Ref, ref } from "vue";
+import Footer from "../../components/Footer.vue";
 
 const nameExample = "Ejemplo 1";
 const apiKeyExample = "http://ejemplo1.com";
 const LLMs = "LLMs";
 const addButton = "Adicionar";
-
-const showNav: Ref<Boolean> = ref(false);
-const showMenu = () => {
-  if (showNav.value == false) {
-    showNav.value = true;
-  } else {
-    showNav.value = false;
-  }
-};
 
 const AddLLM: Function = ():void=> {
     window.location.pathname = "llms/add"
@@ -26,11 +16,12 @@ const AddLLM: Function = ():void=> {
 </script>
 
 <template>
-  <Header :header-title="LLMs" @showMenu="showMenu" />
-  <NavMenu v-show="showNav" />
-  <div class="w-full flex items-center justify-center mt-4">
-    <LLMTarget :name="nameExample" :api-key="apiKeyExample" />
-  </div>
-
-  <AddButton :text="addButton" class="fixed bottom-8 right-8" :onClickAction="AddLLM" />
+  <Header :header-title="LLMs"  />
+  <main class="w-3/4 p-2">
+    <ul class="flex flex-col w-full">
+      <LLMTarget :name="nameExample" :api-key="apiKeyExample" />
+    </ul>
+    <AddButton :text="addButton" class="fixed bottom-20 right-4" :onClickAction="AddLLM" />
+  </main>
+  <Footer />
 </template>

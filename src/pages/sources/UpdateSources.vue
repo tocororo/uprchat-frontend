@@ -3,8 +3,9 @@ import { ref, type Ref } from 'vue';
 
 import Header from '../../components/Header.vue';
 import Footer from '../../components/Footer.vue';
-import BasicButton from '../../components/BasicButton.vue';
-import NavMenu from '../../components/NavMenu.vue';
+import AddIcon from '../../assets/AddIcon.vue';
+import DeleteIcon from '../../assets/DeleteIcon.vue';
+import CancelButton from '../../components/CancelButton.vue';
 import UpdateButton from '../../components/UpdateButton.vue';
 
 const name: Ref<string> = ref("");
@@ -75,15 +76,6 @@ const removeDomain = () => {
     currentDomain.value = "";
 };
 
-const showNav: Ref<Boolean> = ref(false);
-const showMenu = () => {
-    if (showNav.value == false) {
-        showNav.value = true;
-    } else {
-        showNav.value = false
-    }
-};
-
 const cancel = ()=> {window.history.back();};
 
 const updateSource = () => {
@@ -104,10 +96,9 @@ const updateSource = () => {
 </script>
 
 <template>
-    <Header headerTitle="Actualizar Fuente" @showMenu="showMenu" />
-    <NavMenu v-show="showNav" />
-    <main class="sm:w-3/4 flex flex-col justify-center">
-        <form action="" @submit.prevent="" class="grid grid-cols-2 grid-rows-7 items-center gap-2 p-3 ">
+    <Header headerTitle="Actualizar Fuente"  />
+    <main class="sm:w-3/4 w-4/5 flex flex-col justify-center">
+        <form action="" @submit.prevent="" class="grid grid-cols-1 sm:grid-cols-2 grid-rows-7 items-center gap-2 p-3 ">
             <label for="name">Nombre*:</label>
             <div class="border-2 border-green-600 flex p-2 rounded-lg">
                 <input v-model="name" class="w-full outline-0" placeholder="Escriba el nombre de la fuente" type="text"
@@ -117,31 +108,31 @@ const updateSource = () => {
             <div class="border-2 border-green-600 flex gap-1  p-2 rounded-lg">
                 <input class="w-full outline-0" placeholder="Escriba la url de inicio a agregar" type="text"
                     name="new-url" id="" v-model="newUrl">
-                <button class="bg-green-600 rounded-lg " @click="addUrl"><img src="/src//assets/add.svg"
-                        alt=""></button>
+                <button class="bg-green-600 rounded-lg " @click="addUrl"><AddIcon/></button>
             </div>
             <label for="url-list">URLs de Inicio*:</label>
             <div class="border-2 border-green-600 flex gap-1 p-2 rounded-lg">
                 <select v-model="currentUrl" class="w-full bg-transparent outline-0" name="url-list" id="">
                     <option v-for="(url, index) in listUrl" :key="index" :value="url">{{ url }}</option>
                 </select>
-                <button class="bg-red-600 rounded-lg " @click="removeUrl"><img src="/src//assets/delete.svg"
-                        alt=""></button>
+                <button class="bg-red-600 rounded-lg " @click="removeUrl">
+                    <DeleteIcon/>
+                </button>
             </div>
             <label for="new-domain">Nuevo Dominio:</label>
             <div class="border-2 border-green-600 flex p-2 rounded-lg">
                 <input v-model="newDomain" class="w-full outline-0" type="text"
                     placeholder="Escriba el dominio a agregar" name="domain-url" id="">
-                <button class="bg-green-600 rounded-lg " @click="addDomain"><img src="/src//assets/add.svg"
-                        alt=""></button>
+                <button class="bg-green-600 rounded-lg " @click="addDomain"><AddIcon/></button>
             </div>
             <label for="domain-list">Dominios permitidos*:</label>
             <div class="border-2 border-green-600 flex p-2 rounded-lg">
                 <select v-model="currentDomain" class="w-full bg-transparent outline-0" name="domain-list" id="">
                     <option v-for="(domain, i) in listDomains" :key="i" :value="domain">{{ domain }}</option>
                 </select>
-                <button class="bg-red-600 rounded-lg " @click="removeDomain"><img src="/src//assets/delete.svg"
-                        alt=""></button>
+                <button class="bg-red-600 rounded-lg " @click="removeDomain">
+                    <DeleteIcon/>
+                </button>
             </div>
             <label for="collector">Recolector*:</label>
             <div class="border-2 border-green-600 flex p-2 rounded-lg">
@@ -149,7 +140,7 @@ const updateSource = () => {
                     placeholder="Escriba el recolector q usará la fuente">
             </div>
             <UpdateButton text="Actualizar" :onClickAction="updateSource"/>
-            <BasicButton text="Cancel" :onClickAction="cancel" />
+            <CancelButton text="Cancel" :onClickAction="cancel" />
         </form>
     </main>
     <Footer />

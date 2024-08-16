@@ -5,7 +5,9 @@ import { defineProps } from 'vue';
 
 const props = defineProps({
   sourceName: String,
-  listUrl: Array<String>,
+  listUrl: Array<string>,
+  listDomains: Array<string>,
+  collector: String
 });
 
 
@@ -17,17 +19,33 @@ const UpdateSource = ()=>{
 </script>
 
 <template>
-  <li class="border-2 border-green-500 rounded-lg p-2 shadow-lg w-full m-4 flex justify-between">
+  <li class="border-2 border-green-500 rounded-lg p-2 shadow-lg w-full m-4 ">
+    <details class="p-2 flex flex-col gap-1">
+      <summary class="text-green-600 text-2xl">
+        Fuente: {{ props.sourceName }}
+      </summary>
       <div class="basis-4/5">
-        <h3 class="text-green-600 font-bold">Fuente: {{ props.sourceName }}</h3>
         <h4>Lista de URLs:</h4>
         <p>
           {{ props.listUrl }}
         </p>
       </div>
-      <div class="flex justify-between items-center gap-1 basis-1/5">
+      <div class="basis-4/5">
+        <h4>Lista de Dominios:</h4>
+        <p>
+          {{ props.listDomains }}
+        </p>
+      </div>
+      <div class="basis-4/5">
+        <h4>Recollector:</h4>
+        <p>
+          {{ props.collector }}
+        </p>
+      </div>
+      <div class="flex justify-end items-center gap-2 w-full">
         <UpdateButton text="Editar" :on-click-action="UpdateSource"/>
         <DeleteButton text="Borrar"/>
       </div>
+    </details>
   </li>
 </template>

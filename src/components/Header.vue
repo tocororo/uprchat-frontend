@@ -1,76 +1,82 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 
-import MenuIcon from "./MenuIcon.vue";
-
 const props = defineProps({
   headerTitle: String,
 });
 
-
-interface Link {
-  url: string,
-  text: string
-};
-
-const listLinks: Array<Link> = [
-  {
-    url: "/chat",
-    text: "Chat",
-  },
-  {
-    url: "/sources",
-    text: "Fuentes",
-  },
-  {
-    url: "/llms",
-    text: "LLMs",
-  },
-  {
-    url: "/jobs",
-    text: "Recolecciones",
-  },
-];
-
-const currentPath: String = useRoute().fullPath;
-
-
-const emits = defineEmits(["showMenu"]);
-
-const menuButtonAction = () => {
-  emits("showMenu");
-};
+const currentPath: string = useRoute().fullPath;
 
 </script>
 
 <template>
-  <header class="bg-green-800 w-full sticky top-0 text-white shadow-lg px-2 h-16 flex flex-col justify-center items-center z-40">
-    <MenuIcon class="md:hidden" @click="menuButtonAction" />
+  <header
+    class="bg-green-800 w-full sticky top-0 text-white shadow-xl p-2 min-h-16 flex flex-col justify-center items-center z-50">
     <h1 class="text-center text-2xl p-1">{{ props.headerTitle }}</h1>
-    <ul v-if="listLinks" class="flex w-full justify-between py-1 border-t-2 nav-resposive">
-      <li class="flex-1 text-center" v-for="link in listLinks" :key="link.text">
-        <a v-if="currentPath !== link.url" class="text-shadow-white" :href="link.url">{{ link.text }}</a>
-        <a v-else class="current-page" href="#">{{ link.text }}</a>
-      </li>
-    </ul>
+    <nav v-if="currentPath !== '/chat'" class="fixed top-16 left-0 z-20 overflow-x-hidden h-full bottom-12">
+      <aside
+        class="flex gap-2 top-16 left-0 z-20 shadow-lg p-1 sm:p-2 bg-current w-12 sm:w-16 overflow-hidden h-full border-r-2 border-green-600">
+        <div class="h-full sm:hidden text-center">
+          <label for="toggle-menu">
+            <span>
+              <img class="min-w-10 border-2 border-green-600 rounded-lg" src="/src/assets/MenuIconGreen.svg" alt="">
+            </span>
+            <input type="checkbox" class="hidden" name="toggle-menu" id="toggle-menu">
+          </label>
+        </div>
+        <div class="w-5/6 h-full flex flex-col gap-1 p-1 border-2 border-green-600 sm:border-0" id="links-container">
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/root">
+            <img class="w-8 sm:w-10 " src="/src/assets/MenuIconGreen.svg" alt="">
+            <span class="sm:hidden">Menu</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/chat">
+            <img class="w-8 sm:w-10 " src="/src/assets/chat-card.svg" alt="">
+            <span class="sm:hidden">Chat</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/sources">
+            <img class="w-8 sm:w-10 " src="/src/assets/sources-card.svg" alt="">
+            <span class="sm:hidden">Fuentes</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/jobs">
+            <img class="w-8 sm:w-10 " src="/src/assets/crawl-card.svg" alt="">
+            <span class="sm:hidden">Recolecciones</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/mapping">
+            <img class="w-8 sm:w-10 " src="/src/assets/mapping-card.svg" alt="">
+            <span class="sm:hidden">Mappings</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/mappingjobs">
+            <img class="w-8 sm:w-10 " src="/src/assets/mapping-jobs-card.svg" alt="">
+            <span class="sm:hidden">Mappings Jobs</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/llms">
+            <img class="w-8 sm:w-10 " src="/src/assets/llms-card.svg" alt="">
+            <span class="sm:hidden">LLMs</span>
+          </a>
+          <a class="text-green-600 text-2xl flex items-center p-1" href="/viewer">
+            <img class="w-8 sm:w-10 " src="/src/assets/viewer-card.svg" alt="">
+            <span class="sm:hidden">Data Viewer</span>
+          </a>
+        </div>
+      </aside>
+    </nav>
   </header>
 </template>
 
 <style scoped>
-.text-shadow-white:hover {
-  background: radial-gradient(ellipse, #ffffff88 0%, #ffffff00 75%);
-  text-decoration: underline;
+aside:has(#toggle-menu:checked) {
+  width: 80vw;
 }
 
-.current-page {
-  text-decoration: underline;
-  cursor: default;
+aside {
+  transition: width .3s ease-in-out;
 }
 
+aside:hover {
+  width: 20vw;
+}
 
-@media screen and (max-width: 768px) {
-  .nav-resposive {
-    display: none;
-  }
+aside:hover span {
+  display: inline-block;
 }
 </style>

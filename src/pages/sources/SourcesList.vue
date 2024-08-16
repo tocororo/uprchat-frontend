@@ -1,11 +1,8 @@
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
-
 import Header from "../../components/Header.vue";
 import ListItem from "./components/ListItem.vue";
 import AddButton from "../../components/AddButton.vue";
 import Footer from "../../components/Footer.vue";
-import NavMenu from '../../components/NavMenu.vue';
 
 interface Source {
     title: string,
@@ -35,20 +32,11 @@ const AddSource: Function = (): void => {
 window.location.pathname = "sources/add";
 };
 
-const showNav: Ref<Boolean> = ref(false);
-const showMenu = () => {
-  if (showNav.value == false) {
-    showNav.value = true;
-  } else {
-    showNav.value = false
-  }
-};
 
 </script>
 
 <template>
-    <Header headerTitle="Chat" @showMenu="showMenu" />
-    <NavMenu v-show="showNav" />
+    <Header headerTitle="Lista de Fuentes" />
     <main class="w-3/5 my-4">
         <ul class="flex flex-col w-full ">
             <ListItem v-for="source in listSources" :key="source.title" :sourceName="source.title"

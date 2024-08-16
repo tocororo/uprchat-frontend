@@ -1,5 +1,5 @@
 import Login from "./pages/Login.vue";
-import Chat from "./pages/Chat.vue";
+import Chat from "./pages/Chat/Chat.vue";
 import SourceList from "./pages/sources/SourcesList.vue";
 import AddSources from "./pages/sources/AddSources.vue";
 import UpdateSources from "./pages/sources/UpdateSources.vue";
@@ -10,12 +10,18 @@ import JobsAdd from "./pages/collection-jobs/JobsAdd.vue";
 import JobsUpdate from "./pages/collection-jobs/JobsUpdate.vue";
 import JobsLogs from "./pages/collection-jobs/JobsLogs.vue";
 import UpdateLLM from "./pages/llms/UpdateLLM.vue";
+import MainMenu from "./pages/main-view/MainMenu.vue";
 
 const routes = [
     {
       path: "/",
       name: "Login",
       component: Login,
+    },
+    {
+      path: "/root",
+      name: "Menú Principal",
+      component: MainMenu
     },
     {
       path: "/chat",
