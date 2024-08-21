@@ -4,6 +4,7 @@ import AddButton from "../../components/AddButton.vue";
 import Footer from "../../components/Footer.vue";
 import ListItem from "./components/ListItem.vue";
 
+
 interface Collector {
     title: string,
     state: string,
@@ -28,15 +29,14 @@ const listJobs: Array<Collector> = [
     },
 ]
 
-const AddJob: Function = ():void=> {
+const AddJob = ():void=> {
     window.location.pathname = "jobs/add"
 }
-
-
 
 </script>
 
 <template>
+    
     <Header headerTitle="Lista de Recolecciones" />
     <main class=" sm:w-3/5 p-2">
         <ul class="flex flex-col w-full">
