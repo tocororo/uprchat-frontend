@@ -1,51 +1,46 @@
 <script setup lang="ts">
-import Header from "../../components/Header.vue";
-import AddButton from "../../components/AddButton.vue";
-import Footer from "../../components/Footer.vue";
-import ListItem from "./components/ListItem.vue";
+import { ref } from 'vue';
+import { useRouter } from "vue-router";
 
+import AddButton from "../../components/AddButton.vue";
+import ListItem from "./components/ListItem.vue";
+import LoadingAnimation from "../../components/LoadingAnimation.vue";
 
 interface Collector {
-    title: string,
-    state: string,
+    name: string,
+    sources: Array<string>
+    date: string
 }
 
-const listJobs: Array<Collector> = [
-    {
-        "title": "Trabajo 1",
-        "state": "En transcurso",
-    },
-    {
-        "title": "Trabajo 2",
-        "state": "En transcurso",
-    },
-    {
-        "title": "Trabajo 3",
-        "state": "Concluido",
-    },
-    {
-        "title": "Trabajo 4",
-        "state": "Concluido",
-    },
-]
+const router = useRouter();
 
-const AddJob = ():void=> {
-    window.location.pathname = "jobs/add"
+const listJobs = ref<Array<Collector>>([]);
+
+const isLoading = ref<boolean>(false);
+
+const fetchJobs = async () => {
+    isLoading.value = true;
+    const response = await fetch("https://fake-backend-upr-chat.onrender.com/jobs");
+    listJobs.value = await response.json();
+    isLoading.value = false;
+}
+fetchJobs();
+
+const AddJob = (): void => {
+    router.push({ name: "addcrawljobs" })
 }
 
 </script>
 
 <template>
-    
-    <Header headerTitle="Lista de Recolecciones" />
-    <main class=" sm:w-3/5 p-2">
-        <ul class="flex flex-col w-full">
-            <ListItem v-for="(job, index) in listJobs" :key="index" :jobName="job.title" :state="job.state" />
-            <ListItem v-for="(job, index) in listJobs" :key="index" :jobName="job.title" :state="job.state" />
+    <main class="sm:w-3/4 w-4/5 p-2">
+        <ul v-show="!isLoading" class="flex flex-col w-full">
+            <ListItem v-for="(job, index) in listJobs" :key="index" :jobName="job.name" :sources-list="job.sources"
+                :date="job.date" />
         </ul>
-        <AddButton class="fixed bottom-20 right-4" text="Nuevo trabajo" :onClickAction="AddJob"/>
+        <LoadingAnimation v-show="isLoading" />
+        <AddButton class="fixed bottom-20 right-4" text="Nuevo trabajo" :onClickAction="AddJob" />
     </main>
-    <Footer />
 </template>
 
 <style scoped></style>

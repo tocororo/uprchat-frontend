@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const props = defineProps({
     modalTitle: String,
     modalContent: String,
@@ -25,6 +24,7 @@ dialog[open] {
     z-index: 100;
     scale: 1;
     transition: scale .2s ease-in-out;
+
     @starting-style {
         scale: 0;
     }
@@ -34,5 +34,4 @@ dialog {
     transition: scale .2s ease-in-out, display .2s ease-in-out allow-discrete;
     scale: 0;
 }
-
 </style>

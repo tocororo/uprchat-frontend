@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import Header from "../../components/Header.vue";
+import { ref } from "vue";
+
+import HeaderComponent from "../../components/HeaderComponent.vue";
 import ChatHistory from "./components/ChatHistory.vue";
 import ChatSettings from "./components/ChatSettings.vue";
-import { ref } from "vue";
 import MenuIcon from "../../assets/MenuIcon.vue";
 import SendIcon from "../../assets/SendIcon.vue";
 import ModalWindow from "../../components/ModalWindow.vue";
@@ -15,14 +16,13 @@ interface Conversation {
 
 const showHistory = ref<boolean>(false);
 const showSettings = ref<boolean>(false);
-const showModal = ref<boolean>(false);
 const textMessage = ref<string>("");
 const messages = ref<Array<Conversation>>([]);
 const model = ref<string>("");
 const agent = ref<string>("");
 
+const showModal = ref<boolean>(false);
 let modalMessage: string = "";
-
 
 const changeLLM = (llm: string) => {
   model.value = llm;
@@ -53,18 +53,13 @@ const sendMessage = () => {
   });
   textMessage.value = "";
 };
-
-const back = () => {
-  window.history.back();
-}
-
 </script>
 
 <template>
-  <ModalWindow :open="showModal ? true: false" modal-title="Atención" :modal-content="modalMessage"  >
-    <BasicButton text="OK" :on-click-action="()=> showModal = false" />
+  <ModalWindow :open="showModal ? true : false" modal-title="Atención" :modal-content="modalMessage">
+    <BasicButton text="OK" :on-click-action="() => showModal = false" />
   </ModalWindow>
-  <Header headerTitle="Chat" />
+  <HeaderComponent />
   <main class="grid w-full gap-2">
     <label for="history-toggle" class="absolute left-14 top-3 text-white rounded-full bg-green-600 z-50 ">
       <img class="w-10" src="/src/assets/history.svg" alt="">
@@ -86,6 +81,7 @@ const back = () => {
             <div class="w-4/5 self-start border-2 border-black rounded-lg m-2 p-2">
               {{ message.answer }}
             </div>
+
           </div>
         </div>
       </div>

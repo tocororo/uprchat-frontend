@@ -1,84 +1,106 @@
-import Login from "./pages/Login.vue";
-import Chat from "./pages/Chat/Chat.vue";
-import SourceList from "./pages/sources/SourcesList.vue";
-import AddSources from "./pages/sources/AddSources.vue";
-import UpdateSources from "./pages/sources/UpdateSources.vue";
-import LLMs from "./pages/llms/LLMs.vue";
 import AddLLM from "./pages/llms/AddLLM.vue";
+import AddSources from "./pages/sources/AddSources.vue";
+import ContainerComponent from './components/ContainerComponent.vue'
+import ChatScreen from "./pages/Chat/ChatScreen.vue";
+import SourceList from "./pages/sources/SourcesList.vue";
 import JobsList from "./pages/collection-jobs/JobsList.vue";
 import JobsAdd from "./pages/collection-jobs/JobsAdd.vue";
 import JobsUpdate from "./pages/collection-jobs/JobsUpdate.vue";
 import JobsLogs from "./pages/collection-jobs/JobsLogs.vue";
-import UpdateLLM from "./pages/llms/UpdateLLM.vue";
+import LoginScreen from "./pages/Login/LoginScreen.vue";
+import LLMs from "./pages/llms/LLMs.vue";
 import MainMenu from "./pages/main-view/MainMenu.vue";
+import UpdateLLM from "./pages/llms/UpdateLLM.vue";
+import UpdateSources from "./pages/sources/UpdateSources.vue";
 
 const routes = [
-    {
-      path: "/",
-      name: "Login",
-      component: Login,
-    },
-    {
-      path: "/root",
-      name: "Menú Principal",
-      component: MainMenu
-    },
-    {
-      path: "/chat",
-      name: "Chat",
-      component: Chat,
-    },
-    {
-      path: "/sources",
-      name: "Fuentes",
-      component: SourceList,
-    },
-    {
-      path: "/sources/add",
-      name: "Nueva Fuente",
-      component: AddSources,
-    },
-    {
-      path: "/sources/update",
-      name: "Actualizar Fuente",
-      component: UpdateSources,
-    },
-    {
-      path: "/llms",
-      name: "LLMs",
-      component: LLMs,
-    },
-    {
-      path: "/llms/add",
-      name: "AddLLM",
-      component: AddLLM
-    },
-    {
-      path: "/jobs",
-      name: "Recolecciones",
-      component: JobsList
-    },
-    {
-      path: "/jobs/add",
-      name: "Nueva Recolección",
-      component: JobsAdd
-    },
-    {
-      path: "/jobs/update",
-      name: "Actualizar Recolección",
-      component: JobsUpdate
-    },
-    {
-      path: "/jobs/logs",
-      name: "Recolección",
-      component: JobsLogs
-    },
-    {
-      path: "/llms/update",
-      name: "UpdateLLM",
-      component: UpdateLLM
-    }
-  ];
+  {
+    path: "/",
+    name: "login",
+    component: LoginScreen,
+  },
+  {
+    path: "/chat",
+    name: "chat",
+    component: ChatScreen,
+  },
+  {
+    path: "/root",
+    name: "main",
+    component: MainMenu
+  },
+  {
+    path: "/sources",
+    name: "sourcesroot",
+    component: ContainerComponent,
+    children: [
+      {
+        path: "",
+        name: "sourceslist",
+        component: SourceList,
+      },
+      {
+        path: "add",
+        name: "addsources",
+        component: AddSources,
+      },
+      {
+        path: "update/:id",
+        name: "updatesources",
+        component: UpdateSources,
+      },
+    ]
+  },
+  {
+    path: "/crawljobs",
+    name: "crawljobs",
+    component: ContainerComponent,
+    children: [
+      {
+        path: "",
+        name: "crawljobslist",
+        component: JobsList
+      },
+      {
+        path: "add",
+        name: "addcrawljobs",
+        component: JobsAdd
+      },
+      {
+        path: "update/:id",
+        name: "updatecrawljobs",
+        component: JobsUpdate
+      },
+      {
+        path: "logs/:id",
+        name: "crawljobslogs",
+        component: JobsLogs
+      },
+    ]
+  },
+  {
+    path: "/llms",
+    name: "llms",
+    component: ContainerComponent,
+    children: [
+      {
+        path: "",
+        name: "llmslist",
+        component: LLMs,
+      },
+      {
+        path: "add",
+        name: "addllm",
+        component: AddLLM
+      },
+      {
+        path: "update/:id",
+        name: "updatellm",
+        component: UpdateLLM
+      }
+    ]
+  },
+];
 
 export { routes };
 

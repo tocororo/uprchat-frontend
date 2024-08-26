@@ -1,48 +1,101 @@
 <script setup lang="ts">
-import Header from "../../components/Header.vue";
-import UpdateButton from "../../components/UpdateButton.vue";
-import CancelButton from "../../components/CancelButton.vue";
-import Footer from "../../components/Footer.vue";
 import { ref } from 'vue';
+import { useRouter, useRoute } from "vue-router";
 
-const headerTitle: string = "Adicionar LLM";
+import BasicButton from "../../components/BasicButton.vue";
+import CancelButton from "../../components/CancelButton.vue";
+import ModalWindow from "../../components/ModalWindow.vue";
+import LoadingAnimation from "../../components/LoadingAnimation.vue";
+import UpdateButton from "../../components/UpdateButton.vue";
 
-const name = ref<String>("");
-const apikey = ref<String>("");
-const url = ref<String>("");
+const router = useRouter();
 
-const addLLM = ()=> {
+const paramsId = useRoute().params["id"];
 
+const name = ref<string>(paramsId.toString());
+const apikey = ref<string>("");
+const url = ref<string>("");
+const isLoading = ref<boolean>(false);
+const showModal = ref<boolean>(false);
+let modalMsg = "";
+
+const updateLLM = async () => {
+  if (name.value === "") {
+    modalMsg = "Por favor inserte un nombre";
+    showModal.value = true;
+    return;
+  }
+  if (url.value === "") {
+    modalMsg = "Por favor inserte una URL";
+    showModal.value = true;
+    return;
+  }
+  isLoading.value = true;
+  const data = {
+    name: name.value,
+    url: url.value,
+    apikey: apikey.value,
+  }
+
+  const req = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  };
+
+  const response = await fetch("https://fake-backend-upr-chat.onrender.com/llms", req);
+
+  if (response.ok) {
+    router.push({ name: "llmslist" })
+  } else {
+    modalMsg = "Error: " + response.body;
+    isLoading.value = false;
+    showModal.value = true;
+  }
 };
 
-const back  = () => {
-  window.history.back();
+const back = () => {
+  router.push({ name: "llmslist" })
 };
 
 </script>
 
 <template>
-  <Header :header-title="headerTitle"  />
+  <ModalWindow :open="showModal ? true : false" modal-title="Atención" :modal-content="modalMsg">
+    <basic-button text="OK" @click-action="() => showModal = false" />
+  </ModalWindow>
   <main class="w-3/4 flex flex-col justify-center">
-    <form action="" @submit.prevent="" class="grid grid-cols-1 sm:grid-cols-2  sm:grid-rows-7 grid-flow-row items-center gap-2 p-3 ">
+    <form action="" @submit.prevent=""
+      class="grid grid-cols-1 sm:grid-cols-2  sm:grid-rows-7 grid-flow-row items-center gap-2 p-3 ">
       <label for="name">Nombre*:</label>
       <div class="border-2 border-green-600 flex p-2 rounded-lg">
-          <input v-model="name" class="w-full outline-0" placeholder="Escriba el nombre del LLM"
-              type="text" name="name" id="">
+        <input disabled v-model="name" class="w-full outline-0" placeholder="Escriba el nombre del LLM" type="text"
+          name="name" id="">
       </div>
       <label for="url">URL*:</label>
       <div class="border-2 border-green-600 flex p-2 rounded-lg">
-          <input v-model="url" class="w-full outline-0" placeholder="Escriba la url"
-              type="text" name="url" id="">
+        <input v-model="url" class="w-full outline-0" placeholder="Escriba la url" type="text" name="url" id="">
       </div>
       <label for="apikey">API KEY*:</label>
       <div class="border-2 border-green-600 flex p-2 rounded-lg">
-          <input v-model="apikey" class="w-full outline-0" placeholder="Escriba la API KEY"
-              type="text" name="apikey" id="">
+        <input v-model="apikey" class="w-full outline-0" placeholder="Escriba la API KEY" type="text" name="apikey"
+          id="">
       </div>
-      <UpdateButton text="Actualizar" :onClickAction="addLLM" />
-      <CancelButton text="Cancelar" :onClickAction="back" />
-  </form>
+      <LoadingAnimation v-show="isLoading" class="loading" />
+      <UpdateButton v-show="!isLoading" text="Actualizar" :onClickAction="updateLLM" />
+      <CancelButton v-show="!isLoading" text="Cancelar" :onClickAction="back" />
+    </form>
   </main>
-  <Footer/>
 </template>
+
+<style scoped>
+label {
+  text-align: center;
+}
+
+.loading {
+  grid-column: 1 / 3;
+}
+</style>

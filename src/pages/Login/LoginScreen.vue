@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { ref, watch, computed } from "vue";
-import ModalWindow from "../components/ModalWindow.vue";
+import { useRouter } from "vue-router";
+
+import ModalWindow from "../../components/ModalWindow.vue";
+import LoadingAnimation from "../../components/LoadingAnimation.vue";
 
 const username = ref<string>("");
 const password = ref<string>("");
 const usernameError = ref<boolean>(false);
 const passwordError = ref<boolean>(false);
 const showModal = ref<boolean>(false);
+const isLoading = ref<boolean>(false);
+const router = useRouter();
 
 watch(username, (value, oldValue) => {
   if (value.length > 30) {
@@ -32,14 +37,33 @@ watch(password, (value, oldValue) => {
   }
 });
 
-const login = () => {
-  if (username.value === "admin" && password.value === "admin") {
-    window.location.pathname = "root";
+const login = async () => {
+  isLoading.value = true;
+
+  const data = {
+    username: username.value,
+    password: password.value,
+  }
+
+  const req = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  };
+  const response = await fetch("https://fake-backend-upr-chat.onrender.com/user", req);
+
+  const flag = response.status == 200;
+
+  if (flag) {
+    router.push("/root");
     return;
   }
   username.value = "";
   password.value = "";
   showModal.value = true;
+  isLoading.value = false;
 };
 
 const loginBtnSwitch = computed(() => {
@@ -49,12 +73,11 @@ const loginBtnSwitch = computed(() => {
 </script>
 
 <template>
-  <modal-window  :open="showModal ? true: false" modal-title="Credenciales invalidas"
+  <modal-window :open="showModal ? true : false" modal-title="Credenciales invalidas"
     modal-content="Usuario o contraseña incorrectos">
-      <button @click="() => showModal = false"
-        class="text-white text-xl bg-green-800 hover:bg-green-700 p-4  rounded-lg">
-        OK
-      </button>
+    <button @click="() => showModal = false" class="text-white text-xl bg-green-800 hover:bg-green-700 p-4  rounded-lg">
+      OK
+    </button>
   </modal-window>
   <form
     class="flex flex-col items-center w-4/5  sm:w-2/5 h-3/5 mt-auto mb-auto  gap-5 border-2 border-green-800 p-4 rounded-lg shadow-2xl "
@@ -77,9 +100,10 @@ const loginBtnSwitch = computed(() => {
         La contraseña debe poseer entre 4 y 16 caracteres
       </p>
     </div>
-    <button :disabled="loginBtnSwitch ? true : false"
+    <button v-show="!isLoading" :disabled="loginBtnSwitch ? true : false"
       class="text-white text-xl bg-green-800 hover:bg-green-700 p-4 w-full rounded-lg" @click="login">
       Acceder
     </button>
+    <loading-animation v-show="isLoading" />
   </form>
 </template>

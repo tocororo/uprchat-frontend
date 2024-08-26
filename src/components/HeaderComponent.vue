@@ -1,20 +1,16 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { ref, watch } from 'vue';
 
-import ModalWindow from './ModalWindow.vue';
 import BasicButton from './BasicButton.vue';
 import CancelButton from './CancelButton.vue';
+import ModalWindow from './ModalWindow.vue';
 
 const showModal = ref<boolean>(false);
 const logoutSwitch = ref<boolean>(false);
 
-const props = defineProps({
-  headerTitle: String,
-});
-
 const currentPath: string = useRoute().fullPath;
-
+const router = useRouter();
 const logOut = () => {
   showModal.value = true;
 };
@@ -28,15 +24,22 @@ const cancelLogOut = () => {
 }
 
 watch(logoutSwitch, (value, oldValue) => {
-  if (value === true) { 
-    window.location.pathname = '/';
+  if (value === true) {
+    router.push({ name: 'login', state: { from: 'chat' } })
+      .then(() => {
+        console.log('Navigated to Login');
+      })
+      .catch((error) => {
+        console.error('Failed to navigate:', error);
+        logoutSwitch.value = oldValue;
+      });
   }
 });
 
 </script>
 
 <template>
-  <ModalWindow :open="showModal ? true: false" modal-title="Atención" modal-content="Seguro de q desea desloguearse">
+  <ModalWindow :open="showModal ? true : false" modal-title="Atención" modal-content="Seguro de q desea desloguearse">
     <div class="flex justify-around items-center">
       <BasicButton text="Sí" :on-click-action="confirmLogOut" />
       <CancelButton text="No" :on-click-action="cancelLogOut" />
@@ -44,8 +47,9 @@ watch(logoutSwitch, (value, oldValue) => {
   </ModalWindow>
   <header
     class="bg-green-800 w-full sticky top-0 text-white shadow-xl p-2 min-h-16 flex flex-col justify-center items-center z-50">
-    <h1 class="text-center text-2xl p-1">{{ props.headerTitle }}</h1>
-    <button v-if="currentPath === '/chat'" for="history-toggle" class="absolute left-2 top-3 text-white rounded-full bg-green-600 z-50 " @click="logOut">
+    <h1 class="text-center text-2xl p-1">UPRChat</h1>
+    <button v-if="currentPath === '/chat'" for="history-toggle"
+      class="absolute left-2 top-3 text-white rounded-full bg-green-600 z-50 " @click="logOut">
       <img class="w-10" src="/src/assets/LogOutIcon.svg" alt="">
     </button>
     <nav v-if="currentPath !== '/chat'" class="fixed top-16 left-0 z-20 overflow-x-hidden h-full bottom-12">
@@ -60,42 +64,43 @@ watch(logoutSwitch, (value, oldValue) => {
           </label>
         </div>
         <div class="w-5/6 h-full flex flex-col gap-1 p-1 border-2 border-green-600 sm:border-0" id="links-container">
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/root">
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/root">
             <img class="w-8 sm:w-10 " src="/src/assets/MenuIconGreen.svg" alt="">
             <span class="sm:hidden">Menu</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/chat">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/chat">
             <img class="w-8 sm:w-10 " src="/src/assets/chat-card.svg" alt="">
             <span class="sm:hidden">Chat</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/sources">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/sources">
             <img class="w-8 sm:w-10 " src="/src/assets/sources-card.svg" alt="">
             <span class="sm:hidden">Fuentes</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/jobs">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1"
+            to="/crawljobs">
             <img class="w-8 sm:w-10 " src="/src/assets/crawl-card.svg" alt="">
             <span class="sm:hidden">Recolecciones</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/mapping">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/root">
             <img class="w-8 sm:w-10 " src="/src/assets/mapping-card.svg" alt="">
             <span class="sm:hidden">Mappings</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/mappingjobs">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/root">
             <img class="w-8 sm:w-10 " src="/src/assets/mapping-jobs-card.svg" alt="">
             <span class="sm:hidden">Mappings Jobs</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/llms">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/llms">
             <img class="w-8 sm:w-10 " src="/src/assets/llms-card.svg" alt="">
             <span class="sm:hidden">LLMs</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" href="/viewer">
+          </router-link>
+          <router-link class="text-green-600 text-2xl flex items-center border-b-2 border-green-600 p-1" to="/root">
             <img class="w-8 sm:w-10 " src="/src/assets/viewer-card.svg" alt="">
             <span class="sm:hidden">Data Viewer</span>
-          </a>
-          <a class="text-green-600 text-2xl flex items-center p-1" @click="logOut">
+          </router-link>
+          <div class="text-green-600 text-2xl flex items-center p-1" @click="logOut">
             <img class="w-8 sm:w-10 text-green-600" src="/src/assets/logoutgreen.svg" alt="">
             <span class="sm:hidden">Log Out</span>
-          </a>
+          </div>
         </div>
       </aside>
     </nav>

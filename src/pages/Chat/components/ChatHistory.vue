@@ -4,8 +4,7 @@ import AddButton from '../../../components/AddButton.vue';
 </script>
 
 <template>
-    <div
-        class="border-2 bg-green-700 rounded-r-lg p-4 text-white sm:flex sm:flex-col gap-2 hidden justify-between">
+    <div class="border-2 bg-green-700 rounded-r-lg p-4 text-white sm:flex sm:flex-col gap-2 hidden justify-between">
         <AddButton class="border-2 p-1 rounded-lg flex justify-center bg-green-800 hover:bg-green-700"
             text="Nuevo Chat" />
         <div class="grow border-2 p-1 rounded-lg flex flex-col">
@@ -21,12 +20,12 @@ import AddButton from '../../../components/AddButton.vue';
                 </ul>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <style scoped>
 .history-container {
     max-height: 60dvh;
-  }
+}
 </style>
