@@ -15,12 +15,12 @@ import UpdateSources from "./pages/sources/UpdateSources.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/login",
     name: "login",
     component: LoginScreen,
   },
   {
-    path: "/chat",
+    path: "/",
     name: "chat",
     component: ChatScreen,
   },

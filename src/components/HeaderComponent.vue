@@ -52,7 +52,7 @@ watch(logoutSwitch, (value, oldValue) => {
       class="absolute left-2 top-3 text-white rounded-full bg-green-600 z-50 " @click="logOut">
       <img class="w-10" src="/src/assets/LogOutIcon.svg" alt="">
     </button>
-    <nav v-if="currentPath !== '/chat'" class="fixed top-16 left-0 z-20 overflow-x-hidden h-full bottom-12">
+    <nav v-if="currentPath !== '/'" class="fixed top-16 left-0 z-20 overflow-x-hidden h-full bottom-12">
       <aside
         class="flex gap-2 top-16 left-0 z-20 shadow-lg p-1 sm:p-2 bg-current w-12 sm:w-16 overflow-hidden h-full border-r-2 border-green-600">
         <div class="h-full sm:hidden text-center">
