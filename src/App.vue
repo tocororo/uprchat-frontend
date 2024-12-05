@@ -5,6 +5,9 @@
 </template>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
   #app{
     min-width: 100dvw;
     min-height: 100dvh;

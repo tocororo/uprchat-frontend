@@ -1,47 +1,101 @@
 <script setup lang="ts">
-import { Ref, ref } from "vue";
-import NavMenu from "../../components/NavMenu.vue";
-import Header from "../../components/Header.vue";
+import { ref } from 'vue';
+import { useRouter, useRoute } from "vue-router";
+
 import BasicButton from "../../components/BasicButton.vue";
-import LLMForm from "./components/LLMForm.vue";
+import CancelButton from "../../components/CancelButton.vue";
+import ModalWindow from "../../components/ModalWindow.vue";
+import LoadingAnimation from "../../components/LoadingAnimation.vue";
+import UpdateButton from "../../components/UpdateButton.vue";
 
-const headerTitle: string = "Actualizar LLM";
-const backText: string = "Atrás";
-const addText: string = "Actualizar";
+const router = useRouter();
 
-const showNav: Ref<Boolean> = ref(false);
-const showMenu = () => {
-  if (showNav.value == false) {
-    showNav.value = true;
+const paramsId = useRoute().params["id"];
+
+const name = ref<string>(paramsId.toString());
+const apikey = ref<string>("");
+const url = ref<string>("");
+const isLoading = ref<boolean>(false);
+const showModal = ref<boolean>(false);
+let modalMsg = "";
+
+const updateLLM = async () => {
+  if (name.value === "") {
+    modalMsg = "Por favor inserte un nombre";
+    showModal.value = true;
+    return;
+  }
+  if (url.value === "") {
+    modalMsg = "Por favor inserte una URL";
+    showModal.value = true;
+    return;
+  }
+  isLoading.value = true;
+  const data = {
+    name: name.value,
+    url: url.value,
+    apikey: apikey.value,
+  }
+
+  const req = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  };
+
+  const response = await fetch("https://fake-backend-upr-chat.onrender.com/llms", req);
+
+  if (response.ok) {
+    router.push({ name: "llmslist" })
   } else {
-    showNav.value = false;
+    modalMsg = "Error: " + response.body;
+    isLoading.value = false;
+    showModal.value = true;
   }
 };
 
-const back  = () => {
-  window.history.back();
+const back = () => {
+  router.push({ name: "llmslist" })
 };
+
 </script>
 
 <template>
-  <Header :header-title="headerTitle" @show-menu="showMenu" />
-  <NavMenu v-show="showNav" />
-  <div class="llm-form w-1/2 flex flex-col items-center gap-4 mt-40">
-    <LLMForm />
-  </div>
-
-  <BasicButton
-    :text="backText"
-    class="fixed left-8 bottom-8"
-    @click-action="back"
-  />
-  <BasicButton :text="addText" class="fixed right-8 bottom-8" />
+  <ModalWindow :open="showModal ? true : false" modal-title="Atención" :modal-content="modalMsg">
+    <basic-button text="OK" @click-action="() => showModal = false" />
+  </ModalWindow>
+  <main class="w-3/4 flex flex-col justify-center">
+    <form action="" @submit.prevent=""
+      class="grid grid-cols-1 sm:grid-cols-2  sm:grid-rows-7 grid-flow-row items-center gap-2 p-3 ">
+      <label for="name">Nombre*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+        <input disabled v-model="name" class="w-full outline-0" placeholder="Escriba el nombre del LLM" type="text"
+          name="name" id="">
+      </div>
+      <label for="url">URL*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+        <input v-model="url" class="w-full outline-0" placeholder="Escriba la url" type="text" name="url" id="">
+      </div>
+      <label for="apikey">API KEY*:</label>
+      <div class="border-2 border-green-600 flex p-2 rounded-lg">
+        <input v-model="apikey" class="w-full outline-0" placeholder="Escriba la API KEY" type="text" name="apikey"
+          id="">
+      </div>
+      <LoadingAnimation v-show="isLoading" class="loading" />
+      <UpdateButton v-show="!isLoading" text="Actualizar" :onClickAction="updateLLM" />
+      <CancelButton v-show="!isLoading" text="Cancelar" :onClickAction="back" />
+    </form>
+  </main>
 </template>
 
 <style scoped>
-@media (max-width: 640px) {
-  .llm-form {
-    width: 90%;
-  }
+label {
+  text-align: center;
+}
+
+.loading {
+  grid-column: 1 / 3;
 }
 </style>
